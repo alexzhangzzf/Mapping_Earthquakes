@@ -17,15 +17,15 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 
 // Create a base layer that holds both maps.
 let baseMaps = {
-  Street: light,
-  Dark: dark
+  "Streets": streets,
+  "Satellite Streets": satelliteStreets
 };
 
 // Create the map object with a center and zoom level and defalut layer.
 let map = L.map('mapid', {
-  center: [44.0,-80.0],
-  zoom: 2,
-  layers: [light]
+  center: [43.7,-79.3],
+  zoom: 11,
+  layers: [streets]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
@@ -66,18 +66,19 @@ let sanFranAirport =
 // }).addTo(map);
 
 
-//Accessing the Toronto airline routes GeoJSON URL
-let torontoData = "https://raw.githubusercontent.com/alexzhangzzf/Mapping_Earthquakes/Mapping_GeoJSON_linestrings/torontoRoutes.json";
+//Accessing the Toronto neighborhoodss GeoJSON URL
+let torontoHoods = "https://raw.githubusercontent.com/alexzhangzzf/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json";
 
 //grabbing our GeoJSON data.
-d3.json(torontoData).then(function(data){
+d3.json(torontoHoods).then(function(data){
   console.log(data);
   //creating a GeoJSON layer with the retrieved data.
   L.geoJSON(data,{
-    color: "#ffffa1",
-    weight: 2,
+    color: "blue",
+    weight: 1,
+    fillColor: "yellow",
     onEachFeature: function(feature, layer){
-      layer.bindPopup(feature.properties.airline + feature.properties.dst);
+      layer.bindPopup("Neighborhood: " + feature.properties.AREA_NAME);
     }
   }).addTo(map);
 });
